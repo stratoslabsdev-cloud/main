@@ -8,10 +8,7 @@
       name="description"
       content="Flightcraft is a global airline tycoon game. Buy airports, assign planes, compete with AI rivals, and grow your airline empire."
     />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>"
-    />
+    <link rel="icon" href="https://stratosgames.xyz/assets/icon.png" />
     <style>
       *,
       *::before,
@@ -64,6 +61,17 @@
         font-weight: 900;
         color: var(--text);
       }
+      .nav-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+
+        object-fit: cover;
+
+        box-shadow:
+          0 0 18px rgba(56, 189, 248, 0.25),
+          0 0 40px rgba(56, 189, 248, 0.12);
+      }
       .nav-links {
         display: flex;
         gap: 24px;
@@ -84,6 +92,34 @@
         padding: 100px 24px 80px;
         max-width: 680px;
         margin: 0 auto;
+      }
+      .hero-icon {
+        width: 140px;
+        height: 140px;
+
+        object-fit: cover;
+
+        border-radius: 28px;
+
+        margin: 0 auto 30px;
+
+        display: block;
+
+        box-shadow:
+          0 0 40px rgba(56, 189, 248, 0.25),
+          0 0 90px rgba(56, 189, 248, 0.12);
+
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      .hero-icon:hover {
+        transform: translateY(-4px) scale(1.03);
+
+        box-shadow:
+          0 0 50px rgba(56, 189, 248, 0.35),
+          0 0 110px rgba(56, 189, 248, 0.16);
       }
       .hero-badge {
         display: inline-flex;
@@ -293,7 +329,13 @@
   <body>
     <nav>
       <a class="nav-logo" href="/">
-        <span>✈ Flightcraft</span>
+        <img
+          src="https://stratosgames.xyz/assets/icon.png"
+          alt="Flightcraft Icon"
+          class="nav-icon"
+        />
+
+        <span>Flightcraft</span>
       </a>
       <div class="nav-links">
         <a href="/">Home</a>
@@ -304,6 +346,11 @@
 
     <section class="hero">
       <div class="hero-badge">✈ Now on Google Play</div>
+      <img
+        src="https://stratosgames.xyz/assets/icon.png"
+        alt="Flightcraft Icon"
+        class="hero-icon"
+      />
       <h1>Build Your Global<br /><span>Airline Empire</span></h1>
       <p>
         Buy airports, assign planes, set routes, and compete with AI rivals
@@ -318,9 +365,7 @@
         >
           ▶ Get on Google Play
         </a>
-        <a class="btn-secondary" href="/privacy">
-          Privacy Policy
-        </a>
+        <a class="btn-secondary" href="/privacy"> Privacy Policy </a>
       </div>
     </section>
 
