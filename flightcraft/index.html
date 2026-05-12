@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlightCraft — Build Your Global Airline Empire</title>
+    <meta
+      name="description"
+      content="FlightCraft is a global airline tycoon game. Buy airports, assign planes, compete with AI rivals, and grow your airline empire."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #04090f;
+        --bg2: #0a1220;
+        --sky: #38bdf8;
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        --dim: #475569;
+        --border: rgba(255, 255, 255, 0.08);
+        --gold: #f59e0b;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      /* ── Nav ── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(4, 9, 15, 0.95);
+        border-bottom: 1px solid var(--border);
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        backdrop-filter: blur(12px);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .nav-logo span {
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--text);
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      /* ── Hero ── */
+      .hero {
+        text-align: center;
+        padding: 100px 24px 80px;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        border-radius: 99px;
+        padding: 4px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--sky);
+        margin-bottom: 28px;
+      }
+      .hero h1 {
+        font-size: clamp(36px, 7vw, 64px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -1.5px;
+        margin-bottom: 20px;
+      }
+      .hero h1 span {
+        color: var(--sky);
+      }
+      .hero p {
+        font-size: 18px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 40px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--sky);
+        color: #04090f;
+        font-weight: 700;
+        font-size: 15px;
+        padding: 13px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .btn-primary:hover {
+        opacity: 0.88;
+      }
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-weight: 600;
+        font-size: 15px;
+        padding: 13px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* ── Features ── */
+      .features {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+      .section-label {
+        text-align: center;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: var(--sky);
+        margin-bottom: 16px;
+      }
+      .section-title {
+        text-align: center;
+        font-size: clamp(24px, 4vw, 36px);
+        font-weight: 900;
+        margin-bottom: 56px;
+        letter-spacing: -0.5px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+      }
+      .card-icon {
+        font-size: 28px;
+        margin-bottom: 14px;
+      }
+      .card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .card p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* ── Stats ── */
+      .stats {
+        background: var(--bg2);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 60px 24px;
+      }
+      .stats-inner {
+        max-width: 800px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 32px;
+        text-align: center;
+      }
+      .stat-val {
+        font-size: 36px;
+        font-weight: 900;
+        color: var(--sky);
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .stat-label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* ── Play Games ── */
+      .play-games {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 80px 24px;
+        text-align: center;
+      }
+      .play-games h2 {
+        font-size: clamp(24px, 4vw, 32px);
+        font-weight: 900;
+        margin-bottom: 16px;
+      }
+      .play-games p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 32px;
+      }
+      .achievements {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 32px;
+      }
+      .ach-pill {
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 99px;
+        padding: 4px 12px;
+        font-size: 12px;
+        color: var(--sky);
+      }
+
+      /* ── Footer ── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 40px 24px;
+        text-align: center;
+      }
+      .footer-links {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+      .footer-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--text);
+      }
+      .footer-copy {
+        font-size: 12px;
+        color: var(--dim);
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-logo" href="/flightcraft">
+        <span>✈ Flightcraft</span>
+      </a>
+      <div class="nav-links">
+        <a href="/flightcraft">Home</a>
+        <a href="/flightcraft/privacy">Privacy</a>
+        <a href="/flightcraft/terms">Terms</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-badge">✈ Now on Google Play</div>
+      <h1>Build Your Global<br /><span>Airline Empire</span></h1>
+      <p>
+        Buy airports, assign planes, set routes, and compete with AI rivals
+        across real airports worldwide. Watch your airline grow from a
+        regional carrier to a global powerhouse.
+      </p>
+      <div class="hero-btns">
+        <a
+          class="btn-primary"
+          href="https://play.google.com/store/apps/details?id=com.stratoslabs.flightcraft"
+          target="_blank"
+        >
+          ▶ Get on Google Play
+        </a>
+        <a class="btn-secondary" href="/flightcraft/privacy">
+          Privacy Policy
+        </a>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stats-inner">
+        <div>
+          <div class="stat-val">40K+</div>
+          <div class="stat-label">Real airports worldwide</div>
+        </div>
+        <div>
+          <div class="stat-val">55</div>
+          <div class="stat-label">Play Games achievements</div>
+        </div>
+        <div>
+          <div class="stat-val">5</div>
+          <div class="stat-label">AI difficulty levels</div>
+        </div>
+        <div>
+          <div class="stat-val">∞</div>
+          <div class="stat-label">Route combinations</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="features">
+      <p class="section-label">FEATURES</p>
+      <h2 class="section-title">Everything a real airline tycoon needs</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">🗺️</div>
+          <h3>Real World Airports</h3>
+          <p>
+            Operate routes between real airports across every continent. Every
+            airport has real IATA codes, distances, and passenger demand.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h3>AI Rival Airlines</h3>
+          <p>
+            Compete against up to 5 AI rivals with passive, balanced, or
+            aggressive difficulty. They steal your passengers if you can't
+            keep up.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h3>Dynamic Demand</h3>
+          <p>
+            Demand grows when you clear queues and shrinks when you don't.
+            Demand waves — holiday rushes, business surges, festivals — spike
+            traffic every few days.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">✈️</div>
+          <h3>Full Fleet Management</h3>
+          <p>
+            Buy, assign, and swap aircraft across your routes. Short-haul
+            regionals to long-haul widebodies — pick the right plane for each
+            corridor.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏆</div>
+          <h3>Google Play Games</h3>
+          <p>
+            55 achievements, a global net worth leaderboard, and cloud save.
+            Your progress syncs across devices automatically.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Global Contracts</h3>
+          <p>
+            Take on multi-day contracts — move passengers, clear slots,
+            outpace rivals. Complete them for cash rewards that scale as you
+            grow.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="play-games">
+      <h2>55 Achievements to Unlock</h2>
+      <p>
+        From your first route to operating on 5 continents — every milestone
+        is tracked in Google Play Games.
+      </p>
+      <div class="achievements">
+        <span class="ach-pill">First Takeoff</span>
+        <span class="ach-pill">Route Web</span>
+        <span class="ach-pill">Trans-Pacific</span>
+        <span class="ach-pill">Hub Empire</span>
+        <span class="ach-pill">First Million</span>
+        <span class="ach-pill">Sky Tycoon</span>
+        <span class="ach-pill">People Mover</span>
+        <span class="ach-pill">One Year Rush</span>
+        <span class="ach-pill">Around the World</span>
+        <span class="ach-pill">Mega Fleet</span>
+        <span class="ach-pill">Full Trust</span>
+        <span class="ach-pill">Fast Builder</span>
+      </div>
+      <a
+        class="btn-primary"
+        href="https://play.google.com/store/apps/details?id=com.stratoslabs.flightcraft"
+        target="_blank"
+      >
+        ▶ Play Free on Android
+      </a>
+    </section>
+
+    <footer>
+      <div class="footer-links">
+        <a href="/flightcraft">Home</a>
+        <a href="/flightcraft/privacy">Privacy Policy</a>
+        <a href="/flightcraft/terms">Terms of Service</a>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.stratoslabs.flightcraft"
+          target="_blank"
+          >Google Play</a
+        >
+      </div>
+      <p class="footer-copy">
+        © 2026 Stratos Labs · Flightcraft · All rights reserved
+      </p>
+    </footer>
+  </body>
+</html>
