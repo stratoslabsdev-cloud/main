@@ -8,10 +8,7 @@
       name="description"
       content="Privacy Policy for FlightCraft — what data we collect, how we use it, and your choices."
     />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>"
-    />
+    <link rel="icon" href="https://stratosgames.xyz/assets/icon.png" />
     <style>
       *,
       *::before,
@@ -63,6 +60,17 @@
         font-size: 18px;
         font-weight: 900;
         color: var(--text);
+      }
+      .nav-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+
+        object-fit: cover;
+
+        box-shadow:
+          0 0 18px rgba(56, 189, 248, 0.25),
+          0 0 40px rgba(56, 189, 248, 0.12);
       }
       .nav-links {
         display: flex;
@@ -145,7 +153,13 @@
   <body>
     <nav>
       <a class="nav-logo" href="/">
-        <span>✈ Flightcraft</span>
+        <img
+          src="https://stratosgames.xyz/assets/icon.png"
+          alt="Flightcraft Icon"
+          class="nav-icon"
+        />
+
+        <span>Flightcraft</span>
       </a>
       <div class="nav-links">
         <a href="/">Home</a>
